@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Настройка доступа к Claude, Claude Code и тарифам Max/Team без постоянных блокировок</title>
+  <meta name="description" content="Индивидуальная физическая интернет-линия в жилом доме в Молдове и банковская карта того же региона. До 3–4 человек на кабель.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card-bg: #f9fafb;
+      --card-border: #e5e7eb;
+      --card-border-hover: #cbd5e1;
+      --text-heading: #0a0a0a;
+      --text-lead: #1e293b;
+      --text-body: #475569;
+      --text-muted: #64748b;
+      --accent-color: #0284c7;
+      --btn-bg: #000000;
+      --btn-text: #ffffff;
+      --btn-hover: #1f2937;
+      --code-bg: #f1f5f9;
+      --code-border: #e2e8f0;
+      --code-text: #0284c7;
+      --divider: #e5e7eb;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --card-bg: #0a0a0a;
+        --card-border: #1e1e1e;
+        --card-border-hover: #333333;
+        --text-heading: #ffffff;
+        --text-lead: #e2e8f0;
+        --text-body: #94a3b8;
+        --text-muted: #64748b;
+        --accent-color: #38bdf8;
+        --btn-bg: #ffffff;
+        --btn-text: #000000;
+        --btn-hover: #e2e8f0;
+        --code-bg: rgba(56, 189, 248, 0.08);
+        --code-border: rgba(56, 189, 248, 0.2);
+        --code-text: #38bdf8;
+        --divider: #171717;
+      }
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-body);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .theme-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      transition: border-color 0.2s ease;
+    }
+
+    .theme-card:hover {
+      border-color: var(--card-border-hover);
+    }
+
+    .heading-text {
+      color: var(--text-heading);
+    }
+
+    .lead-text {
+      color: var(--text-lead);
+    }
+
+    .muted-text {
+      color: var(--text-muted);
+    }
+
+    .accent-kicker {
+      color: var(--accent-color);
+    }
+
+    .main-button {
+      background-color: var(--btn-bg);
+      color: var(--btn-text);
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .main-button:hover {
+      background-color: var(--btn-hover);
+    }
+
+    .section-border {
+      border-color: var(--divider);
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--code-text);
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 0.15em 0.45em;
+      border-radius: 5px;
+      font-size: 0.88em;
+    }
+  </style>
+</head>
+<body class="selection:bg-sky-500/20 selection:text-sky-400 antialiased">
+
+  <!-- Hero Section -->
+  <section class="pt-16 pb-20 sm:pt-24 sm:pb-28 border-b section-border">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="text-xs font-mono font-semibold uppercase tracking-wider accent-kicker mb-4">
+        Физическая инфраструктура для разработчиков и команд
+      </div>
+
+      <h1 class="heading-text text-3xl sm:text-5xl font-bold tracking-tight leading-[1.18] mb-6">
+        Настройка доступа к Claude, Claude Code и тарифам Max/Team без постоянных блокировок
+      </h1>
+
+      <p class="lead-text text-base sm:text-lg leading-relaxed mb-4 font-medium">
+        По опыту последних месяцев, стандартные попытки подключить Claude через обычные VPN и случайные зарубежные карты быстро заканчиваются баном аккаунта.
+      </p>
+
+      <p class="text-sm sm:text-base leading-relaxed mb-8">
+        Здесь я подробно описал, по каким признакам система вычисляет пользователей из России, как устроена физическая схема решения этой задачи, как настроить её самостоятельно, если у вас есть возможность, и на каких условиях можно подключиться к моей инфраструктуре.
+      </p>
+
+      <div>
+        <a href="https://t.me/nikolaev_gd" target="_blank" rel="noopener noreferrer" 
+           class="main-button inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base shadow-sm">
+          <svg class="w-4 h-4 fill-current text-sky-400" viewBox="0 0 24 24">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.716-.962 4.084-1.362 5.752-.169.705-.432.941-.686.964-.551.05-1.042-.363-1.575-.712-.835-.547-1.307-.887-2.119-1.421-.937-.618-.33-.958.205-1.513.14-.145 2.571-2.356 2.618-2.557.006-.025.01-.12-.049-.172-.059-.053-.146-.035-.209-.021-.089.02-1.503.955-4.242 2.804-.401.275-.764.41-1.088.403-.357-.008-1.044-.202-1.555-.368-.627-.204-1.125-.312-1.082-.658.022-.18.271-.365.746-.554 2.923-1.273 4.873-2.113 5.85-2.52 2.784-1.159 3.362-1.36 3.738-1.366.083-.001.268.02.388.118.101.082.13.193.143.271.013.082.029.266.016.411z"/>
+          </svg>
+          Написать в Telegram @nikolaev_gd
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 1: How system detects users -->
+  <section class="py-16 sm:py-20 border-b section-border">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="mb-10">
+        <span class="text-xs font-mono font-semibold uppercase tracking-wider accent-kicker">01 / Причины блокировок</span>
+        <h2 class="heading-text text-2xl sm:text-3xl font-bold mt-2 mb-3">
+          1. Как система вычисляет пользователей
+        </h2>
+        <p class="lead-text text-sm sm:text-base leading-relaxed">
+          У Anthropic и платежного шлюза Stripe антифрод работает в связке. Аккаунт уходит на проверку или блокируется при совпадении нескольких факторов:
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        
+        <div class="theme-card rounded-xl p-5 sm:p-6">
+          <div class="text-xs font-mono font-bold text-red-500 mb-2">01 // ХОСТИНГ</div>
+          <h3 class="heading-text text-base font-bold mb-2">Серверный IP-адрес</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Подавляющее большинство коммерческих VPN и прокси используют дата-центры (Hetzner, DigitalOcean, OVH). В базах провайдеров такие адреса имеют пометку «хостинг». Для системы это первый сигнал, что подключение идет через шлюз.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5 sm:p-6">
+          <div class="text-xs font-mono font-bold text-amber-500 mb-2">02 // РАССИНХРОН</div>
+          <h3 class="heading-text text-base font-bold mb-2">Несовпадение страны карты и страны подключения</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Если подписка оплачена картой одного региона (например, Турции или Казахстана), а запросы постоянно приходят с IP-адреса другого региона (например, Германии), для антифрода это выглядит подозрительно. Виртуальные карты из Telegram-ботов часто имеют предоплаченный статус (Prepaid), за которым платежные шлюзы пристально следят.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5 sm:p-6">
+          <div class="text-xs font-mono font-bold text-purple-500 mb-2">03 // ПЛОТНОСТЬ</div>
+          <h3 class="heading-text text-base font-bold mb-2">Количество пользователей на одном адресе</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Когда на одном внешнем адресе одновременно появляются десятки сессий, система идентифицирует коллективный прокси или ферму аккаунтов. По этой же причине один аккаунт должен использоваться одним человеком: одновременный вход из разных точек вызывает мгновенную проверку сессии.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5 sm:p-6">
+          <div class="text-xs font-mono font-bold text-sky-500 mb-2">04 // FINGERPRINT</div>
+          <h3 class="heading-text text-base font-bold mb-2">Цифровой отпечаток браузера</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Если на устройстве ранее блокировали аккаунт, в браузере сохраняются следы (куки, локальное хранилище, Canvas-отпечаток). Вход в новый аккаунт из того же рабочего профиля приводит к повторной блокировке по цепочке цифрового отпечатка.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 2: Home node architecture -->
+  <section class="py-16 sm:py-20 border-b section-border">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="mb-10">
+        <span class="text-xs font-mono font-semibold uppercase tracking-wider accent-kicker">02 / Принцип работы</span>
+        <h2 class="heading-text text-2xl sm:text-3xl font-bold mt-2 mb-3">
+          2. Как устроена схема «домашней ноды»
+        </h2>
+        <p class="lead-text text-sm sm:text-base leading-relaxed">
+          Чтобы система видела подключение как естественное, необходимо воспроизвести условия обычного пользователя:
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <div class="theme-card rounded-xl p-5">
+          <div class="font-mono text-xs font-bold accent-kicker mb-2">ЭТАП 01</div>
+          <h3 class="heading-text text-sm font-bold mb-1.5">Реальный физический интернет</h3>
+          <p class="text-xs leading-relaxed">
+            Кабель домашнего провайдера, заведенный в жилую квартиру. В сетевых базах такой адрес имеет статус домашнего (Residential ISP).
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <div class="font-mono text-xs font-bold accent-kicker mb-2">ЭТАП 02</div>
+          <h3 class="heading-text text-sm font-bold mb-1.5">Карта той же страны</h3>
+          <p class="text-xs leading-relaxed">
+            Банковская карта выпущена в той же юрисдикции, где физически находится интернет-кабель. Страна платежа и страна выхода в сеть совпадают.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <div class="font-mono text-xs font-bold accent-kicker mb-2">ЭТАП 03</div>
+          <h3 class="heading-text text-sm font-bold mb-1.5">Ограничение до 3–4 человек на кабель</h3>
+          <p class="text-xs leading-relaxed">
+            На один адрес приходится ограниченное число аккаунтов. Для системы это выглядит как обычное домохозяйство, где несколько человек пользуются сервисом.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <div class="font-mono text-xs font-bold accent-kicker mb-2">ЭТАП 04</div>
+          <h3 class="heading-text text-sm font-bold mb-1.5">Выборочный маршрут (Split Tunneling)</h3>
+          <p class="text-xs leading-relaxed">
+            Через внешний узел направляются только запросы к сервисам Anthropic (<code>claude.ai</code>, <code>*.anthropic.com</code> и сопутствующие домены). Обычный трафик — рабочие созвоны, почта, российские сайты — идет напрямую с вашего компьютера на стандартной скорости.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 3: DIY Instructions -->
+  <section class="py-16 sm:py-20 border-b section-border">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="mb-10">
+        <span class="text-xs font-mono font-semibold uppercase tracking-wider accent-kicker">03 / Открытая архитектура</span>
+        <h2 class="heading-text text-2xl sm:text-3xl font-bold mt-2 mb-3">
+          3. Как это сделать самостоятельно (если есть возможность)
+        </h2>
+        <p class="lead-text text-sm sm:text-base leading-relaxed">
+          Если у вас есть родственник или надежный знакомый в стране, где Claude работает официально:
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4 mb-6">
+        
+        <div class="theme-card rounded-xl p-5">
+          <div class="text-[11px] font-mono font-bold muted-text mb-1">ШАГ 1</div>
+          <h3 class="heading-text text-base font-bold mb-1.5">Оборудование</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Подойдет небольшой энергоэффективный компьютер (например, Raspberry Pi или компактный неттоп на Linux). Он включается в розетку и подключается проводом к роутеру.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <div class="text-[11px] font-mono font-bold muted-text mb-1">ШАГ 2</div>
+          <h3 class="heading-text text-base font-bold mb-1.5">Настройка сети</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            На устройство ставится Xray с протоколом VLESS и маскировкой REALITY, либо Tailscale. В настройках задаются правила: выпускать во внешний интернет только трафик к доменам Anthropic. Функция полного перенаправления всего трафика не включается, чтобы не нагружать домашний канал знакомого.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <div class="text-[11px] font-mono font-bold muted-text mb-1">ШАГ 3</div>
+          <h3 class="heading-text text-base font-bold mb-1.5">Оплата</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Подписка оплачивается местной картой с того же домашнего адреса.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <div class="text-[11px] font-mono font-bold muted-text mb-1">ШАГ 4</div>
+          <h3 class="heading-text text-base font-bold mb-1.5">Контроль нагрузки</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Не стоит подключать к одному кабелю больше 3–4 человек. Если людей больше, понадобится проводить вторую независимую интернет-линию и выпускать вторую карту.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="p-4 rounded-xl theme-card text-xs sm:text-sm lead-text space-y-2">
+        <p>Если у вас есть такая возможность, это рабочий и надежный вариант.</p>
+        <p class="muted-text text-xs">При регистрации рекомендуется использовать чистый профиль в браузере и международный почтовый ящик (например, Gmail), чтобы исключить конфликты со старыми цифровыми отпечатками.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 4: Gennadiy's Infrastructure -->
+  <section class="py-16 sm:py-20 border-b section-border">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="mb-10">
+        <span class="text-xs font-mono font-semibold uppercase tracking-wider accent-kicker">04 / Готовое подключение</span>
+        <h2 class="heading-text text-2xl sm:text-3xl font-bold mt-2 mb-3">
+          4. Готовое подключение через мою инфраструктуру
+        </h2>
+        <p class="lead-text text-sm sm:text-base leading-relaxed">
+          Если настраивать собственную линию не с кем, можно подключиться к моим узлам.
+        </p>
+      </div>
+
+      <!-- Author Card -->
+      <div class="theme-card rounded-xl p-5 sm:p-6 mb-8">
+        <h3 class="heading-text text-base font-bold mb-1">Геннадий</h3>
+        <p class="text-xs sm:text-sm leading-relaxed">
+          Я живу в Москве, но у меня есть гражданство Молдовы, физический дом в Кишинёве и банковские инструменты там.
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="heading-text text-base sm:text-lg font-bold mb-4">Как устроена услуга:</h3>
+        
+        <div class="grid sm:grid-cols-2 gap-4">
+          
+          <div class="theme-card rounded-xl p-5">
+            <h4 class="heading-text text-sm font-bold mb-1.5">Индивидуальный кабель под группу</h4>
+            <p class="text-xs sm:text-sm leading-relaxed">
+              Под группу из 3–4 человек выделяется отдельный физический интернет-кабель с домашним IP и отдельная молдавская карта.
+            </p>
+          </div>
+
+          <div class="theme-card rounded-xl p-5">
+            <h4 class="heading-text text-sm font-bold mb-1.5">Любые тарифы</h4>
+            <p class="text-xs sm:text-sm leading-relaxed">
+              Подключение подходит для личных аккаунтов (Pro, Max) и для терминального инструмента Claude Code. Для небольших команд от 4 человек подключается изолированная линия под тариф Claude Team.
+            </p>
+          </div>
+
+          <div class="theme-card rounded-xl p-5">
+            <h4 class="heading-text text-sm font-bold mb-1.5">Почеловечная оплата</h4>
+            <p class="text-xs sm:text-sm leading-relaxed">
+              Я беру оплату за каждый аккаунт. При росте числа людей требуется физически подключать новые интернет-линии и выпускать дополнительные карты, чтобы сохранять статус «обычного домохозяйства».
+            </p>
+          </div>
+
+          <div class="theme-card rounded-xl p-5">
+            <h4 class="heading-text text-sm font-bold mb-1.5">Официальный расчет</h4>
+            <p class="text-xs sm:text-sm leading-relaxed">
+              Услуга оказывается официально, с уплатой налогов.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 5: Developer details -->
+  <section class="py-16 sm:py-20 border-b section-border">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="mb-10">
+        <span class="text-xs font-mono font-semibold uppercase tracking-wider accent-kicker">05 / Для инженеров</span>
+        <h2 class="heading-text text-2xl sm:text-3xl font-bold mt-2 mb-3">
+          5. Технические детали для разработчиков
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        
+        <div class="theme-card rounded-xl p-5">
+          <h3 class="heading-text text-sm sm:text-base font-bold mb-1.5">Claude Code в терминале:</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Настройка маршрутизации выполняется на уровне сетевого клиента (Tailscale или VLESS-клиент). Официальная консольная утилита <code>claude</code> работает напрямую без дополнительных настроек прокси в <code>.bashrc</code> или переменных окружения.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <h3 class="heading-text text-sm sm:text-base font-bold mb-1.5">VS Code / Cursor:</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Все обращения к API и веб-интерфейсу идут по единому маршруту.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <h3 class="heading-text text-sm sm:text-base font-bold mb-1.5">Браузерное окружение:</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Рекомендуется работать через стандартный браузер. Использование сторонних неофициальных расширений или инструментов автоматизации браузера (вроде Playwright) часто триггерит защиту Cloudflare и приводит к проверкам аккаунта.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5">
+          <h3 class="heading-text text-sm sm:text-base font-bold mb-1.5">Скорость и задержка:</h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Поскольку через узел идет только текст запросов к языковой модели, пропускной способности домашнего канала более чем достаточно.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 6: FAQ -->
+  <section class="py-16 sm:py-20 border-b section-border">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="mb-10">
+        <span class="text-xs font-mono font-semibold uppercase tracking-wider accent-kicker">06 / Разбор ситуаций</span>
+        <h2 class="heading-text text-2xl sm:text-3xl font-bold mt-2 mb-3">
+          6. Вопросы и риски
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        
+        <div class="theme-card rounded-xl p-5 sm:p-6">
+          <h3 class="heading-text text-sm sm:text-base font-bold mb-2">
+            Можно ли использовать мою зарубежную карту, а ваш интернет?
+          </h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Подключить можно, технически сложности нет. Но если страна выпуска вашей карты отличается от региона интернет-кабеля, риск блокировки возрастает. Надежнее, когда карта и IP-адрес принадлежат одной стране.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5 sm:p-6">
+          <h3 class="heading-text text-sm sm:text-base font-bold mb-2">
+            Что, если Anthropic обновит правила?
+          </h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Архитектура опирается на физические домашние адреса и лимиты домохозяйств: система видит обычных частных пользователей. На этой схеме мы стабильно пережили предыдущие волны блокировок.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5 sm:p-6">
+          <h3 class="heading-text text-sm sm:text-base font-bold mb-2">
+            Что делать, если ранее аккаунт уже блокировали?
+          </h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Достаточно создать отдельный чистый профиль в браузере (или очистить историю и куки для доменов Claude) перед первым входом в новый аккаунт, чтобы система не связывала его со старым цифровым отпечатком.
+          </p>
+        </div>
+
+        <div class="theme-card rounded-xl p-5 sm:p-6">
+          <h3 class="heading-text text-sm sm:text-base font-bold mb-2">
+            Как происходит настройка?
+          </h3>
+          <p class="text-xs sm:text-sm leading-relaxed">
+            Я передаю готовый конфигурационный файл и параметры подключения. Настройка на компьютере (macOS, Windows или Linux) занимает около 10–15 минут.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 7: Contacts & Final CTA -->
+  <section class="py-20">
+    <div class="max-w-4xl mx-auto px-6">
+      
+      <div class="theme-card rounded-2xl p-8 sm:p-12 text-center">
+        <span class="text-xs font-mono font-semibold uppercase tracking-wider accent-kicker">Прямой диалог</span>
+        <h2 class="heading-text text-2xl sm:text-3xl font-bold mt-2 mb-4">
+          Контакты
+        </h2>
+
+        <p class="lead-text text-sm sm:text-base max-w-xl mx-auto leading-relaxed mb-8">
+          Если такой формат вам подходит или вы хотите подключить небольшую команду — напишите мне в Telegram. Мы проговорим детали задачи, уточним текущие тарифы и посмотрим, на какой ноде сейчас есть свободное место.
+        </p>
+
+        <div>
+          <a href="https://t.me/nikolaev_gd" target="_blank" rel="noopener noreferrer" 
+             class="main-button inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base shadow-sm">
+            <svg class="w-4 h-4 fill-current text-sky-400" viewBox="0 0 24 24">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.716-.962 4.084-1.362 5.752-.169.705-.432.941-.686.964-.551.05-1.042-.363-1.575-.712-.835-.547-1.307-.887-2.119-1.421-.937-.618-.33-.958.205-1.513.14-.145 2.571-2.356 2.618-2.557.006-.025.01-.12-.049-.172-.059-.053-.146-.035-.209-.021-.089.02-1.503.955-4.242 2.804-.401.275-.764.41-1.088.403-.357-.008-1.044-.202-1.555-.368-.627-.204-1.125-.312-1.082-.658.022-.18.271-.365.746-.554 2.923-1.273 4.873-2.113 5.85-2.52 2.784-1.159 3.362-1.36 3.738-1.366.083-.001.268.02.388.118.101.082.13.193.143.271.013.082.029.266.016.411z"/>
+            </svg>
+            Написать в Telegram @nikolaev_gd
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>
